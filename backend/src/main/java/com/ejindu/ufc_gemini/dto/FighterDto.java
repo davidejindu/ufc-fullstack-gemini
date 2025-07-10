@@ -1,0 +1,22 @@
+package com.ejindu.ufc_gemini.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FighterDto {
+
+    Long id;
+
+    String name;
+
+    String division;
+
+    String imageUrl;
+
+
+}
