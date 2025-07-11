@@ -2,10 +2,9 @@ package com.ejindu.ufc_gemini.controller;
 
 import java.util.List;
 
-import com.ejindu.ufc_gemini.entity.Fighter;
-import com.ejindu.ufc_gemini.repository.FighterRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejindu.ufc_gemini.dto.FighterDto;
+import com.ejindu.ufc_gemini.repository.FighterRepository;
 import com.ejindu.ufc_gemini.service.FighterService;
 import com.ejindu.ufc_gemini.service.GeminiService;
 
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/fighters")
@@ -72,4 +73,4 @@ public class FighterController {
         }
         return ResponseEntity.ok(divisions);
     }
- }
+}
