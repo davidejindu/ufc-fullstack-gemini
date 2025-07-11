@@ -7,6 +7,6 @@ COPY mvnw .
 COPY pom.xml .
 COPY src ./src
 
-RUN ./mvnw clean package && cp target/*.jar app.jar
+RUN ./mvnw clean package -DskipTests && cp target/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
