@@ -1,4 +1,23 @@
 FROM eclipse-temurin:17-jdk
-LABEL MAINTAINER="ejindu.com"
+
+WORKDIR /app
+
+
+COPY .mvn/ .mvn
+COPY mvnw .
+COPY pom.xml .
+
+
+RUN ./mvnw dependency:go-offline
+
+
+COPY src ./src
+
+
+RUN ./mvnw clean package -DskipTests
+
+
 COPY target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
