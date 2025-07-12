@@ -21,7 +21,7 @@ import com.ejindu.ufc_gemini.service.GeminiService;
 import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "https://ufc-fullstack-gemini.vercel.app")
 @AllArgsConstructor
 @RestController
 @RequestMapping(path = "/fighters")
