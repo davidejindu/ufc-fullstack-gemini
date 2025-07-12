@@ -1,7 +1,10 @@
 package com.ejindu.ufc_gemini.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,13 +82,22 @@ public class GeminiService {
 
         private Mono<String> getAccessToken() {
                 try {
-                        GoogleCredentials credentials = GoogleCredentials
-                                        .fromStream(getClass().getClassLoader().getResourceAsStream("gemini-key.json"))
-                                        .createScoped("https://www.googleapis.com/auth/cloud-platform");
-
+                        String base64Key = System.getenv("GEMINI_KEY_BASE64");
+                        GoogleCredentials credentials;
+                        if (base64Key != null) {
+                                byte[] decoded = Base64.getDecoder().decode(base64Key);
+                                InputStream keyStream = new ByteArrayInputStream(decoded);
+                                credentials = GoogleCredentials.fromStream(keyStream)
+                                                .createScoped("https://www.googleapis.com/auth/cloud-platform");
+                        } else {
+                                // fallback for local dev
+                                credentials = GoogleCredentials
+                                                .fromStream(getClass().getClassLoader()
+                                                                .getResourceAsStream("gemini-key.json"))
+                                                .createScoped("https://www.googleapis.com/auth/cloud-platform");
+                        }
                         credentials.refreshIfExpired();
                         return Mono.just(credentials.getAccessToken().getTokenValue());
-
                 } catch (IOException e) {
                         return Mono.error(new RuntimeException("Failed to get Google access token", e));
                 }
